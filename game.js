@@ -815,5 +815,42 @@ function createExplosionParticles() {
   return particles;
 }
 
+// Ajouter au début de votre fichier game.js après les autres déclarations
+const touchControls = {
+  up: document.getElementById("upButton"),
+  down: document.getElementById("downButton"),
+  left: document.getElementById("leftButton"),
+  right: document.getElementById("rightButton"),
+};
+
+// Ajouter les gestionnaires d'événements tactiles
+Object.entries(touchControls).forEach(([direction, button]) => {
+  button.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    switch (direction) {
+      case "up":
+        if (lastInputDirection.y !== 1) {
+          inputDirection = { x: 0, y: -1 };
+        }
+        break;
+      case "down":
+        if (lastInputDirection.y !== -1) {
+          inputDirection = { x: 0, y: 1 };
+        }
+        break;
+      case "left":
+        if (lastInputDirection.x !== 1) {
+          inputDirection = { x: -1, y: 0 };
+        }
+        break;
+      case "right":
+        if (lastInputDirection.x !== -1) {
+          inputDirection = { x: 1, y: 0 };
+        }
+        break;
+    }
+  });
+});
+
 startGame();
 drawRocket(); // Démarrer l'animation de la fusée
