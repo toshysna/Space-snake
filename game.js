@@ -13,8 +13,6 @@ const explosionSound = document.getElementById("explosionSound");
 
 let snake = [{ x: 10, y: 10 }];
 let food = { x: 15, y: 15 };
-let dx = 0;
-let dy = 0;
 let score = 0;
 let gameSpeed = 100;
 let gameLoop;
@@ -147,32 +145,27 @@ function changeDirection(event) {
 
   if (gameState === "gameover") {
     if ([LEFT, RIGHT, UP, DOWN].includes(keyPressed)) {
-      // Redémarrage manuel
       resetGame();
       return;
     }
   }
 
-  const goingUp = dy === -1;
-  const goingDown = dy === 1;
-  const goingRight = dx === 1;
-  const goingLeft = dx === -1;
+  const goingUp = lastInputDirection.y === -1;
+  const goingDown = lastInputDirection.y === 1;
+  const goingRight = lastInputDirection.x === 1;
+  const goingLeft = lastInputDirection.x === -1;
 
   if (keyPressed === LEFT && !goingRight) {
-    dx = -1;
-    dy = 0;
+    inputDirection = { x: -1, y: 0 };
   }
   if (keyPressed === UP && !goingDown) {
-    dx = 0;
-    dy = -1;
+    inputDirection = { x: 0, y: -1 };
   }
   if (keyPressed === RIGHT && !goingLeft) {
-    dx = 1;
-    dy = 0;
+    inputDirection = { x: 1, y: 0 };
   }
   if (keyPressed === DOWN && !goingUp) {
-    dx = 0;
-    dy = 1;
+    inputDirection = { x: 0, y: 1 };
   }
 }
 
@@ -540,8 +533,8 @@ function animateGameOver() {
 function resetGame() {
   // Réinitialiser les variables de base
   snake = [{ x: 10, y: 10 }];
-  dx = 0;
-  dy = 0;
+  inputDirection = { x: 0, y: 0 };
+  lastInputDirection = { x: 0, y: 0 };
   score = 0;
   scoreText.textContent = score;
 
