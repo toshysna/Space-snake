@@ -1,52 +1,52 @@
 # Space Snake Game
 
-Un jeu de snake mais sur le thème spatial ! 
+A snake game but with a space theme!
 
-## 🎮 Caractéristiques
+## 🎮 Features
 
-- Design spatial avec météorites en mouvement
-- Serpent avec effet de traînée de feu
-- Système de score avec jalons (100, 200, 400, 600, 800, 1000)
-- Événements spéciaux avec une fusée qui apparaît aux jalons
-- Effets sonores spatiaux
-- Animation de Game Over
-- Système de high score persistant
+- Space design with moving meteors
+- Snake with fire trail effect
+- Score system with milestones (100, 200, 400, 600, 800, 1000)
+- Special events with rocket appearing at milestones
+- Space sound effects
+- Game Over animation
+- Persistent high score system
 
-## 🕹️ Comment Jouer
+## 🕹️ How to Play
 
-- Utilisez les touches fléchées pour diriger le serpent
-- Collectez les fragments de planètes bleus pour grandir
-- Évitez les collisions avec les murs et vous-même
-- Atteignez des scores spéciaux pour voir la fusée apparaître
-- Cliquez sur la fusée pour réinitialiser votre high score (attention !)
-- Activez le son pour une expérience complète
+- Use arrow keys to control the snake
+- Collect blue planet fragments to grow
+- Avoid collisions with walls and yourself
+- Reach special scores to see the rocket appear
+- Click on the rocket to reset your high score (careful!)
+- Enable sound for a complete experience
 
-## 🚀 Fonctionnalités Spéciales
+## 🚀 Special Features
 
-- Effets visuels de particules
-- Animations fluides
-- Système de sauvegarde automatique des scores
-- Design responsive
-- Effets sonores immersifs
+- Particle visual effects
+- Smooth animations
+- Automatic score saving system
+- Responsive design
+- Immersive sound effects
 
-## 🛠️ Technologies Utilisées
+## 🛠️ Technologies Used
 
-- HTML5 Canvas pour les graphismes
-- CSS3 pour les animations
-- JavaScript vanilla pour la logique
-- LocalStorage pour la sauvegarde des scores
-- Web Audio API pour les effets sonores
+- HTML5 Canvas for graphics
+- CSS3 for animations
+- Vanilla JavaScript for logic
+- LocalStorage for score saving
+- Web Audio API for sound effects
 
-## 🎯 Objectifs
+## 🎯 Goals
 
-Battez votre high score et débloquez tous les jalons pour voir la fusée apparaître !
+Beat your high score and unlock all milestones to see the rocket appear!
 
-## 🎮 Jouer en Ligne
+## 🎮 Play Online
 
-[Jouez au jeu ici]()
+[Play the game here]()
 
 ## 📝 Notes
 
-- Le jeu nécessite un navigateur moderne
-- Activez le son pour une meilleure expérience
-- Les scores sont sauvegardés localement
+- Game requires a modern browser
+- Enable sound for better experience
+- Scores are saved locally
