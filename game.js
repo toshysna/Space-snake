@@ -1,3 +1,6 @@
+let dx = 0;
+let dy = 0;
+
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const scoreText = document.getElementById("scoreText");
