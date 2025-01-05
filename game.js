@@ -126,7 +126,11 @@ function update() {
 }
 
 function moveSnake() {
-  const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+  const input = getInputDirection();
+  const head = {
+    x: snake[0].x + input.x,
+    y: snake[0].y + input.y,
+  };
   snake.unshift(head);
   if (!checkFoodCollision()) {
     snake.pop();
@@ -820,11 +824,13 @@ let touchStartX = 0;
 let touchStartY = 0;
 const minSwipeDistance = 30; // Distance minimale pour détecter un swipe
 
-// Ajout des gestionnaires d'événements tactiles
+// Gestionnaires d'événements tactiles
 canvas.addEventListener("touchstart", handleTouchStart, false);
 canvas.addEventListener("touchmove", handleTouchMove, false);
+canvas.addEventListener("touchend", handleTouchEnd, false);
 
 function handleTouchStart(event) {
+  event.preventDefault();
   const touch = event.touches[0];
   touchStartX = touch.clientX;
   touchStartY = touch.clientY;
@@ -835,7 +841,7 @@ function handleTouchMove(event) {
     return;
   }
 
-  event.preventDefault(); // Empêcher le défilement de la page
+  event.preventDefault();
 
   const touch = event.touches[0];
   const touchEndX = touch.clientX;
@@ -844,39 +850,45 @@ function handleTouchMove(event) {
   const deltaX = touchEndX - touchStartX;
   const deltaY = touchEndY - touchStartY;
 
-  // Vérifier si le mouvement est assez long pour être considéré comme un swipe
   if (
     Math.abs(deltaX) > minSwipeDistance ||
     Math.abs(deltaY) > minSwipeDistance
   ) {
-    // Déterminer la direction principale du swipe
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
       // Mouvement horizontal
       if (deltaX > 0 && lastInputDirection.x !== -1) {
-        inputDirection = { x: 1, y: 0 }; // Droite
+        inputDirection = { x: 1, y: 0 };
       } else if (deltaX < 0 && lastInputDirection.x !== 1) {
-        inputDirection = { x: -1, y: 0 }; // Gauche
+        inputDirection = { x: -1, y: 0 };
       }
     } else {
       // Mouvement vertical
       if (deltaY > 0 && lastInputDirection.y !== -1) {
-        inputDirection = { x: 0, y: 1 }; // Bas
+        inputDirection = { x: 0, y: 1 };
       } else if (deltaY < 0 && lastInputDirection.y !== 1) {
-        inputDirection = { x: 0, y: -1 }; // Haut
+        inputDirection = { x: 0, y: -1 };
       }
     }
 
-    // Réinitialiser les positions de départ
     touchStartX = touchEndX;
     touchStartY = touchEndY;
   }
 }
 
-// Ajouter un gestionnaire pour réinitialiser les variables quand le toucher se termine
-canvas.addEventListener("touchend", () => {
+function handleTouchEnd() {
   touchStartX = 0;
   touchStartY = 0;
-});
+}
+
+// À ajouter au début du fichier, avec les autres variables globales
+let inputDirection = { x: 0, y: 0 };
+let lastInputDirection = { x: 0, y: 0 };
+
+// À ajouter avant la fonction update()
+function getInputDirection() {
+  lastInputDirection = inputDirection;
+  return inputDirection;
+}
 
 startGame();
 drawRocket(); // Démarrer l'animation de la fusée
