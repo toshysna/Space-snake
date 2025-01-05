@@ -1,0 +1,224 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #0a0a2a;
+  background-image: url("images/space-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: url("images/space-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.game-container {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  margin: 20px;
+}
+
+canvas {
+  border: 2.5px solid #4a4a8a;
+  background-color: rgba(0, 0, 20, 0.7);
+  box-shadow: 0 0 34px #4a4a8a;
+  border-radius: 13px;
+}
+
+.scores-container {
+  position: absolute;
+  top: -51px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 100%;
+}
+
+.current-score {
+  color: #7f7fff;
+  font-size: 34px;
+  font-family: "Press Start 2P", "Orbitron", sans-serif;
+  text-shadow: 0 0 21px #4a4a8a;
+  letter-spacing: 3.4px;
+  margin-top: 17px;
+}
+
+.high-score {
+  color: #ffd700;
+  font-size: 34px;
+  font-family: "Press Start 2P", "Orbitron", sans-serif;
+  text-shadow: 0 0 21px #4a4a8a;
+  letter-spacing: 3.4px;
+}
+
+@keyframes collect-animation {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+@keyframes highScoreAnim {
+  0% {
+    transform: scale(1);
+    color: #ffd700;
+    text-shadow: 0 0 21px #4a4a8a;
+  }
+  50% {
+    transform: scale(1.2);
+    color: #fff;
+    text-shadow: 0 0 30px #ffd700;
+  }
+  100% {
+    transform: scale(1);
+    color: #ffd700;
+    text-shadow: 0 0 21px #4a4a8a;
+  }
+}
+
+.high-score.animate {
+  animation: highScoreAnim 0.6s ease-in-out 2;
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseText {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.rocket-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  cursor: default;
+}
+
+/* Changer le curseur quand il est sur la fusée */
+.rocket-canvas:hover {
+  cursor: pointer;
+}
+
+.sound-prompt {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.sound-button {
+  background: #4a4a8a;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-family: "Righteous", sans-serif;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.sound-button:hover {
+  background: #6a6aaa;
+}
+
+@keyframes resetHighScore {
+  0% {
+    transform: scale(1);
+    color: #ffd700;
+    text-shadow: 0 0 21px #4a4a8a;
+  }
+  25% {
+    transform: scale(1.5);
+    color: #ff0000;
+    text-shadow: 0 0 30px #ff0000;
+  }
+  50% {
+    transform: scale(1.2);
+    color: #ff4444;
+    text-shadow: 0 0 25px #ff0000;
+  }
+  100% {
+    transform: scale(1);
+    color: #ffd700;
+    text-shadow: 0 0 21px #4a4a8a;
+  }
+}
+
+.reset-animation {
+  animation: resetHighScore 1s ease-in-out;
+}
