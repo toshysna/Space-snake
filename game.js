@@ -815,41 +815,67 @@ function createExplosionParticles() {
   return particles;
 }
 
-// Ajouter au début de votre fichier game.js après les autres déclarations
-const touchControls = {
-  up: document.getElementById("upButton"),
-  down: document.getElementById("downButton"),
-  left: document.getElementById("leftButton"),
-  right: document.getElementById("rightButton"),
-};
+// Variables pour la gestion des swipes
+let touchStartX = 0;
+let touchStartY = 0;
+const minSwipeDistance = 30; // Distance minimale pour détecter un swipe
 
-// Ajouter les gestionnaires d'événements tactiles
-Object.entries(touchControls).forEach(([direction, button]) => {
-  button.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    switch (direction) {
-      case "up":
-        if (lastInputDirection.y !== 1) {
-          inputDirection = { x: 0, y: -1 };
-        }
-        break;
-      case "down":
-        if (lastInputDirection.y !== -1) {
-          inputDirection = { x: 0, y: 1 };
-        }
-        break;
-      case "left":
-        if (lastInputDirection.x !== 1) {
-          inputDirection = { x: -1, y: 0 };
-        }
-        break;
-      case "right":
-        if (lastInputDirection.x !== -1) {
-          inputDirection = { x: 1, y: 0 };
-        }
-        break;
+// Ajout des gestionnaires d'événements tactiles
+canvas.addEventListener("touchstart", handleTouchStart, false);
+canvas.addEventListener("touchmove", handleTouchMove, false);
+
+function handleTouchStart(event) {
+  const touch = event.touches[0];
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+}
+
+function handleTouchMove(event) {
+  if (!touchStartX || !touchStartY) {
+    return;
+  }
+
+  event.preventDefault(); // Empêcher le défilement de la page
+
+  const touch = event.touches[0];
+  const touchEndX = touch.clientX;
+  const touchEndY = touch.clientY;
+
+  const deltaX = touchEndX - touchStartX;
+  const deltaY = touchEndY - touchStartY;
+
+  // Vérifier si le mouvement est assez long pour être considéré comme un swipe
+  if (
+    Math.abs(deltaX) > minSwipeDistance ||
+    Math.abs(deltaY) > minSwipeDistance
+  ) {
+    // Déterminer la direction principale du swipe
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      // Mouvement horizontal
+      if (deltaX > 0 && lastInputDirection.x !== -1) {
+        inputDirection = { x: 1, y: 0 }; // Droite
+      } else if (deltaX < 0 && lastInputDirection.x !== 1) {
+        inputDirection = { x: -1, y: 0 }; // Gauche
+      }
+    } else {
+      // Mouvement vertical
+      if (deltaY > 0 && lastInputDirection.y !== -1) {
+        inputDirection = { x: 0, y: 1 }; // Bas
+      } else if (deltaY < 0 && lastInputDirection.y !== 1) {
+        inputDirection = { x: 0, y: -1 }; // Haut
+      }
     }
-  });
+
+    // Réinitialiser les positions de départ
+    touchStartX = touchEndX;
+    touchStartY = touchEndY;
+  }
+}
+
+// Ajouter un gestionnaire pour réinitialiser les variables quand le toucher se termine
+canvas.addEventListener("touchend", () => {
+  touchStartX = 0;
+  touchStartY = 0;
 });
 
 startGame();
