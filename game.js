@@ -31,6 +31,7 @@ let gameOverAnim = {
   progress: 0,
   startTime: 0,
   isAnimating: false,
+  finalScore: 0,
 };
 
 // Ajouter une variable pour l'animation de disparition
@@ -142,11 +143,18 @@ function changeDirection(event) {
 
   const keyPressed = event.keyCode;
 
+  // Ajouter une vérification pour l'animation de fin de jeu
   if (gameState === "gameover") {
-    if ([LEFT, RIGHT, UP, DOWN].includes(keyPressed)) {
+    // Ne permettre le redémarrage que si l'animation de fin est terminée
+    if (
+      [LEFT, RIGHT, UP, DOWN].includes(keyPressed) &&
+      !gameOverAnim.isAnimating
+    ) {
       resetGame();
       return;
     }
+    // Si l'animation n'est pas terminée, ignorer l'input
+    return;
   }
 
   const goingUp = dy === -1;
@@ -428,6 +436,9 @@ function draw() {
 function gameOver() {
   clearInterval(gameLoop);
   gameState = "gameover";
+  gameOverAnim.startTime = performance.now();
+  gameOverAnim.isAnimating = true;
+  gameOverAnim.finalScore = score; // Sauvegarder le score final
 
   if (snakeFadeOut.isActive && snakeFadeOut.progress < 1) {
     requestAnimationFrame(draw);
@@ -444,8 +455,6 @@ function gameOver() {
         "snakeMilestones",
         JSON.stringify(reachedMilestones)
       );
-
-      // Activer la fusée seulement après la mort si un nouveau jalon est atteint
       rocket.active = true;
       rocket.x = window.innerWidth + 100;
       rocket.y = Math.random() * (window.innerHeight - 100);
@@ -453,10 +462,6 @@ function gameOver() {
     }
   }
 
-  gameOverAnim.startTime = performance.now();
-  gameOverAnim.isAnimating = true;
-
-  // Modifier le délai à 500ms (0.5 seconde)
   setTimeout(() => {
     try {
       playSound(gameOverSound, 0.5);
@@ -505,7 +510,11 @@ function animateGameOver() {
     // Score et High Score normaux
     ctx.fillStyle = `rgba(106, 106, 170, ${fadeIn})`;
     ctx.font = "32px 'Righteous'";
-    ctx.fillText(`SCORE: ${score}`, canvas.width / 2, canvas.height / 2);
+    ctx.fillText(
+      `SCORE: ${gameOverAnim.finalScore}`,
+      canvas.width / 2,
+      canvas.height / 2
+    );
 
     const highScoreY = canvas.height / 2 + 43;
     ctx.fillStyle = `rgba(255, 215, 0, ${fadeIn})`;
@@ -529,11 +538,18 @@ function animateGameOver() {
 
   if (gameOverAnim.progress < 1) {
     requestAnimationFrame(animateGameOver);
+  } else {
+    gameOverAnim.isAnimating = false;
   }
 }
 
 // Créer une fonction de réinitialisation
 function resetGame() {
+  // Attendre que l'animation soit terminée
+  if (gameOverAnim.isAnimating) {
+    return;
+  }
+
   // Réinitialiser les variables de base
   snake = [{ x: 10, y: 10 }];
   dx = 0;
@@ -552,6 +568,7 @@ function resetGame() {
     progress: 0,
     startTime: 0,
     isAnimating: false,
+    finalScore: 0,
   };
   collectAnimation = null;
   collectAnimationFrame = 0;
