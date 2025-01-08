@@ -438,7 +438,7 @@ function gameOver() {
   gameState = "gameover";
   gameOverAnim.startTime = performance.now();
   gameOverAnim.isAnimating = true;
-  gameOverAnim.finalScore = score; // Sauvegarder le score final
+  gameOverAnim.finalScore = score;
 
   if (snakeFadeOut.isActive && snakeFadeOut.progress < 1) {
     requestAnimationFrame(draw);
@@ -446,8 +446,8 @@ function gameOver() {
     return;
   }
 
-  // Vérifier les jalons après la mort
-  const milestones = [100, 200, 400, 600, 800, 1000];
+  // Ajouter 500 à la liste des jalons
+  const milestones = [100, 200, 400, 500, 600, 800, 1000];
   for (const milestone of milestones) {
     if (score >= milestone && !reachedMilestones.includes(milestone)) {
       reachedMilestones.push(milestone);
