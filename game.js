@@ -609,6 +609,26 @@ function handleMouseClick(event) {
   return;
 }
 
+// Fonction pour initialiser le son
+function initializeSound() {
+    [collectSound, hitSound, gameOverSound, explosionSound].forEach(sound => {
+        sound.play().catch(() => {});
+        sound.pause();
+        sound.currentTime = 0;
+    });
+}
+
+// Fonction pour démarrer le jeu
+function startGame() {
+    document.getElementById('startGameButton').style.display = 'none';
+    initializeSound();
+    // Autres initialisations du jeu
+    gameLoop = setInterval(update, gameSpeed);
+}
+
+// Ajouter l'écouteur d'événement pour le bouton de démarrage
+document.getElementById('startGameButton').addEventListener('click', startGame);
+
 // Ajouter la fonction de dessin de la fusée
 function drawRocket() {
   const rocketCanvas = document.getElementById("rocketCanvas");
@@ -842,5 +862,4 @@ function createExplosionParticles() {
   return particles;
 }
 
-startGame();
 drawRocket(); // Démarrer l'animation de la fusée
