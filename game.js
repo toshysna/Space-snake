@@ -80,16 +80,26 @@ let resetScoreAnim = {
 };
 
 // Au début du fichier, ajouter une variable pour gérer l'état du son
-let soundEnabled = false;
+let soundEnabled = true;
 
-// Ajouter la gestion du bouton de son
-document.getElementById("enableSound").addEventListener("click", function () {
-  soundEnabled = true;
-  this.parentElement.style.display = "none";
+// Initialiser le son lors de la première interaction
+function initSound() {
+    if (soundEnabled) {
+        // Jouer et immédiatement mettre en pause tous les sons pour les initialiser
+        [collectSound, hitSound, gameOverSound, explosionSound].forEach(sound => {
+            sound.play().catch(() => {});
+            sound.pause();
+            sound.currentTime = 0;
+        });
+    }
+    // Retirer les event listeners une fois initialisé
+    document.removeEventListener('keydown', initSound);
+    document.removeEventListener('mousedown', initSound);
+}
 
-  // Jouer un son court pour tester/initialiser l'audio
-  playSound(collectSound, 0.1);
-});
+// Ajouter les event listeners pour l'initialisation du son
+document.addEventListener('keydown', initSound);
+document.addEventListener('mousedown', initSound);
 
 document.addEventListener("keydown", changeDirection);
 document.addEventListener("mousedown", handleMouseClick);
