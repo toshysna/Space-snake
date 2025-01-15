@@ -863,3 +863,28 @@ function createExplosionParticles() {
 }
 
 drawRocket(); // Démarrer l'animation de la fusée
+
+// Au début du fichier, ajoutez :
+let currentUsername = '';
+const loginModal = document.getElementById('loginModal');
+const usernameInput = document.getElementById('usernameInput');
+const submitUsernameButton = document.getElementById('submitUsername');
+
+// Vérifier si l'utilisateur est déjà connecté
+if (localStorage.getItem('username')) {
+    currentUsername = localStorage.getItem('username');
+    loginModal.style.display = 'none';
+} else {
+    loginModal.style.display = 'block';
+    document.getElementById('startGameButton').style.display = 'none';
+}
+
+submitUsernameButton.addEventListener('click', () => {
+    const username = usernameInput.value.trim();
+    if (username) {
+        currentUsername = username;
+        localStorage.setItem('username', username);
+        loginModal.style.display = 'none';
+        document.getElementById('startGameButton').style.display = 'block';
+    }
+});
