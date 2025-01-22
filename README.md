@@ -43,7 +43,7 @@ Beat your high score and unlock all milestones to see the rocket appear!
 
 ## 🎮 Play Online
 
-[Play the game here]([https://toshysna.github.io/space-snake/](https://toshysna.github.io/Space-snake/))
+[Play the game here]([https://toshysna.github.io/Space-snake/])
 
 [Or on itch.io](https://toshysna.itch.io/space-snake)
 
